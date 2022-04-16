@@ -14,7 +14,6 @@ urlpatterns = [
 
     path('signup/', signup, name="signup"),
     path('signin/', signin, name="signin"),
-
     path('expenses_page/', expenses_page, name="expenses_page"),
     
     path('signout/', signout, name="signout"),

@@ -79,6 +79,7 @@ def profile_update(request):
 
     profile.save()
 
+    
     # return redirect(profile_page)
     profile_data(request)
     return JsonResponse(default_data)
