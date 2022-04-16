@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block main_content %}
+<!-- Page content -->
+      <section class="container pt-5">
+        <div class="row">
+
+  
+          <!-- Sidebar (User info + Account menu) -->
+          {% include 'menu_content.html' %}
+
+
+          <!-- Account collections -->
+          <div class="col-md-8 offset-lg-1 pb-5 mb-lg-2 pt-md-5 mt-n3 mt-md-0">
+            <div class="ps-md-3 ps-lg-0 mt-md-2 pt-md-4 pb-md-2">
+              <div class="d-sm-flex align-items-center justify-content-between pt-xl-1 mb-3 pb-3">
+                <h1 class="h2 mb-sm-0">My Expenses</h1>
+                <select class="form-select" style="max-width: 15rem;">
+                  <option value="Published">Published</option>
+                  <option value="Category">Category</option>
+                  <option value="Title AZ">Title AZ</option>
+                  <option value="Title ZA">Title ZA</option>
+                </select>
+              </div>
+
+              <!-- Item -->
+              {% for expense in all_expenses %}
+              <div class="card border-0 shadow-sm overflow-hidden mb-4">
+                <div class="row g-0">
+                  <a href="#" class="col-sm-4 bg-repeat-0 bg-position-center bg-size-cover" style="background-image: url(assets/img/account/collection01.jpg); min-height: 13rem;"></a>
+                  <div class="col-sm-8">
+                    <div class="card-body">
+                      <div class="fs-sm text-muted mb-1">{{expense.DateCreated}}</div>
+                      <h2 class="h4 pb-1 mb-2">
+                        <a href="#">{{expense.ExpenseCategory.Name}}</a>
+                      </h2>
+                      <p class="mb-4 mb-lg-5">{{expense.Amount}}</p>
+                      <div class="d-flex">
+                        <button type="button" class="btn btn-outline-primary px-3 px-lg-4 me-3">
+                          <i class="bx bx-edit fs-xl me-xl-2"></i>
+                          <span class="d-none d-xl-inline">Edit</span>
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary px-3 px-lg-4 me-3">
+                          <i class="bx bx-power-off fs-xl me-xl-2"></i>
+                          <span class="d-none d-xl-inline">Deactivate</span>
+                        </button>
+                        <button type="button" class="btn btn-outline-danger px-3 px-lg-4">
+                          <i class="bx bx-trash-alt fs-xl me-xl-2"></i>
+                          <span class="d-none d-xl-inline">Delete</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+              
+            </div>
+          </div>
+        </div>
+      </section>
+
+{% endblock %}

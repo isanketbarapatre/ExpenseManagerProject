@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block main_content %}
+<section class="container pt-5">
+        <div class="row">
+  
+          <!-- Sidebar (User info + Account menu) -->
+          {% include 'menu_content.html' %}
+
+
+          <!-- Account details -->
+          <div class="col-md-8 offset-lg-1 pb-5 mb-2 mb-lg-4 pt-md-5 mt-n3 mt-md-0">
+            <div class="ps-md-3 ps-lg-0 mt-md-2 py-md-4">
+              <h1 class="h2 pt-xl-1 pb-3">Account Details {{profile_data.Master.Email}}</h1>
+
+              <!-- Basic info -->
+              <h2 class="h5 text-primary mb-4">Basic info</h2>
+              <form style="position: relative;" action='{% url "profile_update" %}' method="POST" class="needs-validation border-bottom pb-3 pb-lg-4 profile-update-form" novalidate>
+                {% csrf_token %}
+                <div class="row pb-2">
+                  <div class="col-sm-6">
+                    <div class="mb-4">
+                      <label for="fn" class="form-label fs-base">Full name</label>
+                      <input type="text" id="fn" name="full_name" class="form-control form-control-lg" value="{{profile_data.FullName}}" required>
+                      <div class="invalid-feedback">Please enter your full name!</div>
+                    </div>
+
+                    <div class="mb-4">
+                      <label class="form-label fs-base d-block">Gender</label>
+                      {% for gc in gender_choices %}
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input {{gc.short_text}}" type="radio" id="ex-radio-4" value="{{gc.short_text}}" name="gender">
+                        <label class="form-check-label" style="text-transform: capitalize;" for="ex-radio-4">{{gc.text}}</label>
+                      </div>
+                      {% endfor %}
+                    </div>
+                    
+                    <div class="mb-4">
+                      <label for="sn" class="form-label fs-base">Mobile</label>
+                      <input type="text" id="sn" name="mobile" class="form-control form-control-lg" value="{{profile_data.Mobile}}" required data-format="custom" data-delimiter="" data-blocks="10" data-numeral="9" placeholder="0000000000">
+                      <div class="invalid-feedback">Please enter your mobile number!</div>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="row">
+                      <div class="col mb-4">
+                        <label for="state" class="form-label fs-base">State</label>
+                        <input type="text" id="state" name="state" class="form-control form-control-lg" value="{{profile_data.State}}" required>
+                        <div class="invalid-feedback">Please provide a valid email address!</div>
+                      </div>
+
+                      <div class="col">
+                        <label for="city" class="form-label fs-base">City</label>
+                        <input type="text" id="city" name="city" class="form-control form-control-lg" value="{{profile_data.City}}">
+                      </div>
+                      
+                    </div>
+
+                    <div class="">
+                      <label for="address" class="form-label fs-base">Address</label>
+                      <textarea id="address" name="address" class="form-control form-control-lg" rows="4" placeholder="Add address lines...">{{profile_data.Address}}</textarea>
+                    </div>
+                  </div>
+                  
+                </div>
+                <div class="d-flex mb-3">
+                  <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+              </form>
+
+              <!-- Address -->
+              <h2 class="h5 text-primary pt-1 pt-lg-3 my-4">Address</h2>
+              <form class="needs-validation border-bottom pb-2 pb-lg-4" novalidate>
+                <div class="row pb-2">
+                  <div class="col-sm-6 mb-4">
+                    <label for="country" class="form-label fs-base">Country</label>
+                    <select id="country" class="form-select form-select-lg" required>
+                      <option value="" disabled>Choose country</option>
+                      <option value="Australia">Australia</option>
+                      <option value="Belgium">Belgium</option>
+                      <option value="Canada">Canada</option>
+                      <option value="Denmark">Denmark</option>
+                      <option value="USA" selected>USA</option>
+                    </select>
+                    <div class="invalid-feedback">Please choose your country!</div>
+                  </div>
+                  <div class="col-sm-6 mb-4">
+                    <label for="state" class="form-label fs-base">State</label>
+                    <select id="state" class="form-select form-select-lg" required>
+                      <option value="" disabled>Choose state</option>
+                      <option value="Arizona">Arizona</option>
+                      <option value="California">California</option>
+                      <option value="Iowa">Iowa</option>
+                      <option value="Florida" selected>Florida</option>
+                      <option value="Michigan">Michigan</option>
+                      <option value="Texas">Texas</option>
+                    </select>
+                    <div class="invalid-feedback">Please choose your state!</div>
+                  </div>
+                  <div class="col-sm-6 mb-4">
+                    <label for="city" class="form-label fs-base">City</label>
+                    <select id="city" class="form-select form-select-lg" required>
+                      <option value="" disabled>Choose city</option>
+                      <option value="Boston">Boston</option>
+                      <option value="Chicago">Chicago</option>
+                      <option value="Los Angeles">Los Angeles</option>
+                      <option value="Miami" selected>Miami</option>
+                      <option value="New York">New York</option>
+                      <option value="Philadelphia">Philadelphia</option>
+                    </select>
+                    <div class="invalid-feedback">Please choose your city!</div>
+                  </div>
+                  <div class="col-sm-6 mb-4">
+                    <label for="zip" class="form-label fs-base">ZIP code</label>
+                    <input type="text" id="zip" class="form-control form-control-lg" required>
+                    <div class="invalid-feedback">Please enter your ZIP code!</div>
+                  </div>
+                  <div class="col-12 mb-4">
+                    <label for="address1" class="form-label fs-base">Address line 1</label>
+                    <input id="address1" class="form-control form-control-lg" required>
+                  </div>
+                  <div class="col-12 mb-4">
+                    <label for="address2" class="form-label fs-base">Address line 2 <small class="text-muted">(optional)</small></label>
+                    <input id="address2" class="form-control form-control-lg">
+                  </div>
+                </div>
+                <div class="d-flex mb-3">
+                  <button type="reset" class="btn btn-secondary me-3">Cancel</button>
+                  <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+              </form>
+
+              <!-- Delete account -->
+              <h2 class="h5 text-primary pt-1 pt-lg-3 mt-4">Delete account</h2>
+              <p>When you delete your account, your public profile will be deactivated immediately. If you change your mind before the 14 days are up, sign in with your email and password, and we’ll send you a link to reactivate your account.</p>
+              <div class="form-check mb-4">
+                <input type="checkbox" id="delete-account" class="form-check-input">
+                <label for="delete-account" class="form-check-label fs-base">Yes, I want to delete my account</label>
+              </div>
+              <button type="button" class="btn btn-danger">Delete</button>
+            </div>
+          </div>
+        </div>
+      </section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  $('document').ready(function() {
+    
+    // alert($(".{{profile_data.Gender}}").val())
+    // $(".{{profile_data.Gender}}").attr('checked', true)
+    $(".{{profile_data.Gender}}").prop('checked', true);
+
+    function alerty(message, type) {
+      var wrapper = document.createElement('div')
+      wrapper.innerHTML = '<div style="position: absolute; bottom: 0; right: 0;" class="alert alert-' + type + ' alert-dismissible" role="alert">' + message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>'
+
+      $('.profile-update-form').append(wrapper);
+    }
+    // alerty('message', 'success')
+
+    $('form.profile-update-form').submit(function(e) {
+      e.preventDefault();
+
+      // var url = $(this).attr('action')
+      
+      $.ajax({
+        url: '{% url "profile_update" %}',
+        method: 'post',
+        data: $(this).serialize(),
+        success: function(result) {
+          // alert('success');
+          console.log(result)
+          alerty('profile has updated successfully.', 'success')
+        },
+        error: function(err) {
+          alerty('something went wrong', 'danger')
+        },
+      });
+    })
+  });
+</script>
+{% endblock %}
